@@ -67,7 +67,7 @@ def inlinequery(update, context):
     results = [
         InlineQueryResultPhoto(
             type='photo',
-            id=uuid4(),
+            id="1",
             title="Make a meme with this text",
             photo_url="https://github.com/LastGenius-edu/mgs_bot/blob/master/output/img.png",
             thumb_url="https://github.com/LastGenius-edu/mgs_bot/blob/master/output/img.png",

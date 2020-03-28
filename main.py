@@ -56,7 +56,7 @@ def generate_meme(text):
     draw.text((0, 0), text, (255, 255, 255), font=font)
     print(f"edited image with text '{text}', height: {img.height}, width: {img.width}")
 
-    r = requests.post("http://bugs.python.org", data={'id': image_token, 'image': img})
+    r = requests.post("https://api.imgbb.com/1/upload", data={'id': image_token, 'image': img})
     print(r)
 
 

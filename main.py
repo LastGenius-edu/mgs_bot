@@ -18,6 +18,7 @@ from PIL import ImageDraw
 from telegram import InlineQueryResultPhoto, InlineQueryResultArticle ,ParseMode, \
     InputTextMessageContent
 from telegram.ext import Updater, InlineQueryHandler, CommandHandler
+from telegram.utils.helpers import escape_markdown
 
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -73,10 +74,11 @@ def inlinequery(update, context):
             photo_height=size[0],
             photo_width=size[1]),
         InlineQueryResultArticle(
-            id="2",
-            title=query,
-            description="fuckyou",
-            input_message_content=query*2)]
+            id=uuid4(),
+            title="Italic",
+            input_message_content=InputTextMessageContent(
+                "_{}_".format(escape_markdown(query)),
+                parse_mode=ParseMode.MARKDOWN))]
 
     update.inline_query.answer(results)
     print("updated message")

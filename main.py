@@ -15,7 +15,7 @@ from PIL import ImageFont
 from PIL import ImageDraw
 
 # imports for telegram bot code
-from telegram import InlineQueryResultPhoto, ParseMode, \
+from telegram import InlineQueryResultPhoto, InlineQueryResultArticle ,ParseMode, \
     InputTextMessageContent
 from telegram.ext import Updater, InlineQueryHandler, CommandHandler
 
@@ -67,11 +67,16 @@ def inlinequery(update, context):
     results = [
         InlineQueryResultPhoto(
             type='photo',
-            id=randint(1, 287878416582808857),
+            id="1",
             photo_url="https://github.com/LastGenius-edu/mgs_bot/blob/master/output/img.png",
             thumb_url="https://github.com/LastGenius-edu/mgs_bot/blob/master/output/img.png",
             photo_height=size[0],
-            photo_width=size[1])]
+            photo_width=size[1]),
+        InlineQueryResultArticle(
+            id="2",
+            title=query,
+            description="fuckyou",
+            input_message_content=query*2)]
 
     update.inline_query.answer(results)
     print("updated message")

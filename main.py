@@ -64,6 +64,7 @@ def inlinequery(update, context):
     query = update.inline_query.query
     print(f"received query='{query}'")
     size = generate_meme(query)
+    context.bot.send_photo(chat_id=update.effective_chat.id, photo=open('output/img.png', 'rb'))
     results = [
         InlineQueryResultPhoto(
             type='photo',

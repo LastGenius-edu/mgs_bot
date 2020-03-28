@@ -69,10 +69,14 @@ def inlinequery(update, context):
         InlineQueryResultPhoto(
             type='photo',
             id="1",
+            title="Picture",
             photo_url="https://github.com/LastGenius-edu/mgs_bot/blob/master/output/img.png",
             thumb_url="https://github.com/LastGenius-edu/mgs_bot/blob/master/output/img.png",
             photo_height=size[0],
-            photo_width=size[1]),
+            photo_width=size[1],
+            input_message_content=InputTextMessageContent(
+                "_{}_".format(escape_markdown(query)),
+                parse_mode=ParseMode.MARKDOWN)),
         InlineQueryResultArticle(
             id=uuid4(),
             title="Italic",

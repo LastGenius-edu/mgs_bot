@@ -60,6 +60,7 @@ def inlinequery(update, context):
     """Handle the inline query."""
     query = update.inline_query.query
     size = generate_meme(query)
+    print("received", query)
     results = [
         InlineQueryResultPhoto(
             id=uuid4(),

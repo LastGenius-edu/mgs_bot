@@ -50,7 +50,7 @@ def generate_meme(text):
 
     # draw.text((x, y),"Sample Text",(r,g,b))
     draw.text((0, 0), text, (255, 255, 255), font=font)
-    path = os.path.join("output", f'img.png')
+    path = os.path.join("output", 'img.png')
     img.save(path)
 
     return img.height, img.width
@@ -63,6 +63,7 @@ def inlinequery(update, context):
     print("received", query, "size", size)
     results = [
         InlineQueryResultPhoto(
+            type='photo',
             id=uuid4(),
             title="Make a meme with this text",
             photo_url="https://github.com/LastGenius-edu/mgs_bot/blob/master/output/img.png",

@@ -64,19 +64,14 @@ def inlinequery(update, context):
     """Handle the inline query."""
     query = update.inline_query.query
     print(f"received query='{query}'")
-    size = generate_meme(query)
+    # size = generate_meme(query)
     results = [
         InlineQueryResultPhoto(
             type='photo',
             id="1",
             title="Picture",
-            photo_url="https://github.com/LastGenius-edu/mgs_bot/blob/master/output/img.png",
-            thumb_url="https://github.com/LastGenius-edu/mgs_bot/blob/master/output/img.png",
-            photo_height=size[0],
-            photo_width=size[1],
-            input_message_content=InputTextMessageContent(
-                "_{}_".format(escape_markdown(query)),
-                parse_mode=ParseMode.MARKDOWN)),
+            photo_url="https://i.ytimg.com/vi/2wExLjkk3o0/maxresdefault.jpg",
+            thumb_url="https://i.ytimg.com/vi/2wExLjkk3o0/maxresdefault.jpg"),
         InlineQueryResultArticle(
             id=uuid4(),
             title="Italic",

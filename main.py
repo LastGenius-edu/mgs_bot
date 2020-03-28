@@ -52,7 +52,7 @@ def generate_meme(text):
     # draw.text((x, y),"Sample Text",(r,g,b))
     draw.text((0, 0), text, (255, 255, 255), font=font)
     print(f"edited image with text {text}, height: {img.height}, width: {img.width}")
-    path = os.path.join("output", 'img.png')
+    path = "output/img.png"
     img.save(path)
     print(f"saved image by path {path}")
 

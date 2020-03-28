@@ -5,6 +5,7 @@ Press Ctrl-C on the command line or send a signal to the process to stop the
 bot.
 """
 import logging
+import requests
 import os
 from random import randint
 
@@ -25,6 +26,7 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
                     level=logging.INFO)
 
 logger = logging.getLogger(__name__)
+image_token = os.environ['IMAGE_TOKEN']
 
 
 # Define a few command handlers. These usually take the two arguments update and
@@ -53,18 +55,16 @@ def generate_meme(text):
     # draw.text((x, y),"Sample Text",(r,g,b))
     draw.text((0, 0), text, (255, 255, 255), font=font)
     print(f"edited image with text '{text}', height: {img.height}, width: {img.width}")
-    path = "output/img.png"
-    img.save(path)
-    print(f"saved image by path '{path}'")
 
-    return img.height, img.width
+    r = requests.post("http://bugs.python.org", data={'id': image_token, 'image': img})
+    print(r)
 
 
 def inlinequery(update, context):
     """Handle the inline query."""
     query = update.inline_query.query
     print(f"received query='{query}'")
-    # size = generate_meme(query)
+    generate_meme(query)
     results = [
         InlineQueryResultPhoto(
             type='photo',

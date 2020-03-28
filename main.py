@@ -72,7 +72,8 @@ def inlinequery(update, context):
             photo_url="https://github.com/LastGenius-edu/mgs_bot/blob/master/output/img.png",
             thumb_url="https://github.com/LastGenius-edu/mgs_bot/blob/master/output/img.png",
             photo_height=size[0],
-            photo_width=size[1])]
+            photo_width=size[1],
+            input_message_content="meme")]
 
     update.inline_query.answer(results)
     print("updated message")

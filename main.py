@@ -42,6 +42,7 @@ def help(update, context):
 
 def generate_meme(text):
     img_number = randint(1, 10)
+    print(f"chose picture {img_number}")
     img = Image.open(os.path.join("images", f"img{img_number}.png"))
     draw = ImageDraw.Draw(img)
 
@@ -50,8 +51,10 @@ def generate_meme(text):
 
     # draw.text((x, y),"Sample Text",(r,g,b))
     draw.text((0, 0), text, (255, 255, 255), font=font)
+    print(f"edited image with text {text}, height: {img.height}, width: {img.width}")
     path = os.path.join("output", 'img.png')
     img.save(path)
+    print(f"saved image by path {path}")
 
     return img.height, img.width
 
@@ -59,8 +62,8 @@ def generate_meme(text):
 def inlinequery(update, context):
     """Handle the inline query."""
     query = update.inline_query.query
+    print(f"received {query}")
     size = generate_meme(query)
-    print("received", query, "size", size)
     results = [
         InlineQueryResultPhoto(
             type='photo',
@@ -72,6 +75,7 @@ def inlinequery(update, context):
             photo_width=size[1])]
 
     update.inline_query.answer(results)
+    print("updated message")
 
 
 def error(update, context):

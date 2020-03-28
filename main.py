@@ -64,17 +64,14 @@ def inlinequery(update, context):
     query = update.inline_query.query
     print(f"received query='{query}'")
     size = generate_meme(query)
-    context.bot.send_photo(chat_id=update.effective_chat.id, photo=open('output/img.png', 'rb'))
     results = [
         InlineQueryResultPhoto(
             type='photo',
-            id="1",
-            title="Make a meme with this text",
+            id=randint(1, 287878416582808857),
             photo_url="https://github.com/LastGenius-edu/mgs_bot/blob/master/output/img.png",
             thumb_url="https://github.com/LastGenius-edu/mgs_bot/blob/master/output/img.png",
             photo_height=size[0],
-            photo_width=size[1],
-            caption="meme")]
+            photo_width=size[1])]
 
     update.inline_query.answer(results)
     print("updated message")

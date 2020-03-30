@@ -5,7 +5,7 @@ Press Ctrl-C on the command line or send a signal to the process to stop the
 bot.
 """
 import logging
-import requests
+import pyimgur
 import os
 from random import randint
 
@@ -26,7 +26,6 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
                     level=logging.INFO)
 
 logger = logging.getLogger(__name__)
-image_token = os.environ['IMAGE_TOKEN']
 
 
 # Define a few command handlers. These usually take the two arguments update and
@@ -46,32 +45,41 @@ def help(update, context):
 def generate_meme(text):
     img_number = randint(1, 10)
     print(f"chose picture #{img_number}")
-    img = Image.open(os.path.join("images", f"img{img_number}.png"))
+    img = Image.open(f"images\img{img_number}.png")
     draw = ImageDraw.Draw(img)
 
     # font = ImageFont.truetype(<font-file>, <font-size>)
-    font = ImageFont.truetype(os.path.join("images", "impact.ttf"), 12)
+    font = ImageFont.truetype(os.path.join("images", "impact.ttf"), 54)
 
     # draw.text((x, y),"Sample Text",(r,g,b))
-    draw.text((0, 0), text, (255, 255, 255), font=font)
-    print(f"edited image with text '{text}', height: {img.height}, width: {img.width}")
+    draw.text((50, 0), text, (255, 255, 255), font=font)
+    print(f"edited image with text {text}, height: {img.height}, width: {img.width}")
 
-    r = requests.post("https://api.imgbb.com/1/upload", data={'id': image_token, 'image': img})
-    print(r)
+    path = "output/img.jpg"
+    img.save(path)
+
+    CLIENT_ID = "2d152aa4920cec9"
+
+    im = pyimgur.Imgur(CLIENT_ID)
+    uploaded_image = im.upload_image(path, title="MGS Bot Image")
+
+    print(uploaded_image.link)
+    return uploaded_image.link
 
 
 def inlinequery(update, context):
     """Handle the inline query."""
     query = update.inline_query.query
     print(f"received query='{query}'")
-    generate_meme(query)
+    # image_link = generate_meme(query)
+
     results = [
         InlineQueryResultPhoto(
             type='photo',
             id="1",
             title="Picture",
-            photo_url="https://i.ytimg.com/vi/2wExLjkk3o0/maxresdefault.jpg",
-            thumb_url="https://i.ytimg.com/vi/2wExLjkk3o0/maxresdefault.jpg"),
+            photo_url='https://i.imgur.com/kh1sYEY.jpg',
+            thumb_url='https://i.imgur.com/kh1sYEY.jpg'),
         InlineQueryResultArticle(
             id=uuid4(),
             title="Italic",
@@ -89,7 +97,8 @@ def error(update, context):
 
 
 def main():
-    token = os.environ['TELEGRAM_TOKEN']
+    # token = os.environ['TELEGRAM_TOKEN']
+    token = '1046142769:AAHg-TU8VekNRPjgquTedqEX_O3wyFBtx4M'
     updater = Updater(token, use_context=True)
 
     # Get the dispatcher to register handlers

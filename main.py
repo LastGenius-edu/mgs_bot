@@ -43,43 +43,54 @@ def help(update, context):
 
 
 def generate_meme(text):
+    """
+    Generates a picture given a text, uploads it to Imgur
+    """
+
+    # Chooses a random image from the set, opens and initializes a Draw class
     img_number = randint(1, 10)
     print(f"chose picture #{img_number}")
     img = Image.open(f"images\img{img_number}.png")
     draw = ImageDraw.Draw(img)
 
+    # Choosing the font for the text
     # font = ImageFont.truetype(<font-file>, <font-size>)
-    font = ImageFont.truetype(os.path.join("images", "impact.ttf"), 54)
+    font = ImageFont.truetype(os.path.join("images", "impact.ttf"), 124)
 
+    # Draws the text itself
     # draw.text((x, y),"Sample Text",(r,g,b))
-    draw.text((50, 0), text, (255, 255, 255), font=font)
+    draw.text((200, 0), text, (255, 255, 255), font=font)
     print(f"edited image with text {text}, height: {img.height}, width: {img.width}")
 
+    # Saves an image to the output folder
     path = "output/img.jpg"
     img.save(path)
 
+    # Uploading to Imgur given API key
     CLIENT_ID = "2d152aa4920cec9"
-
     im = pyimgur.Imgur(CLIENT_ID)
     uploaded_image = im.upload_image(path, title="MGS Bot Image")
 
+    # Returns a link to the uploaded image
     print(uploaded_image.link)
     return uploaded_image.link
 
 
 def inlinequery(update, context):
     """Handle the inline query."""
+
+    # Given a query, generate a picture and add it to inline menu
     query = update.inline_query.query
     print(f"received query='{query}'")
-    # image_link = generate_meme(query)
+    image_link = generate_meme(query)
 
     results = [
         InlineQueryResultPhoto(
             type='photo',
             id="1",
             title="Picture",
-            photo_url='https://i.imgur.com/kh1sYEY.jpg',
-            thumb_url='https://i.imgur.com/kh1sYEY.jpg'),
+            photo_url=image_link,
+            thumb_url=image_link),
         InlineQueryResultArticle(
             id=uuid4(),
             title="Italic",

@@ -67,7 +67,7 @@ def generate_meme(text):
     img.save(path)
 
     # Uploading to Imgur given API key
-    CLIENT_ID = "2d152aa4920cec9"
+    CLIENT_ID = os.environ['IMGUR_TOKEN']
     im = pyimgur.Imgur(CLIENT_ID)
     uploaded_image = im.upload_image(path, title="MGS Bot Image")
 
@@ -108,8 +108,7 @@ def error(update, context):
 
 
 def main():
-    # token = os.environ['TELEGRAM_TOKEN']
-    token = '1046142769:AAHg-TU8VekNRPjgquTedqEX_O3wyFBtx4M'
+    token = os.environ['TELEGRAM_TOKEN']
     updater = Updater(token, use_context=True)
 
     # Get the dispatcher to register handlers
